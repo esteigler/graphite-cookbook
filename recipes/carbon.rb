@@ -45,5 +45,6 @@ end
 service "carbon-cache" do
   pattern "carbon-cache"
   action [:enable, :start]
+  provider Chef::Provider::Service::Upstart
 end
 

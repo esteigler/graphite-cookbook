@@ -3,24 +3,23 @@
 
 description "carbon-cache v<%= node.graphite.version %>"
 
-start on runlevel [2345]
+start on filesystem or runlevel [2345]
 stop on runlevel [!2345]
+
+umask 022
+expect daemon
 
 env CARBON_CACHE=<%= node.graphite.home %>/bin/carbon-cache.py
 env PIDFILE=<%= node.graphite.home %>/storage/carbon-cache.pid
 
+pre-start script
+    test -d /opt/graphite || { stop; exit 0; }
+end script
+
+chdir /opt/graphite
+
+# Note the use of a wrapper so we can activate our virtualenv:
+exec start-stop-daemon --oknodo --chdir /opt/graphite --user graphite --chuid graphite --pidfile $PIDFILE --name carbon-cache --exec $CARBON_CACHE --start start
+
 # uncomment this for debugging
 # console output
-
-pre-start script
-  $CARBON_CACHE --pidfile=$PIDFILE start
-end script
-
-post-stop script
-  $CARBON_CACHE --pidfile=$PIDFILE stop
-
-  # don't consider this service stopped until the PID gets removed
-  #
-  while [ -e $PIDFILE ]; do sleep 1 ; done
-  exit 0
-end script

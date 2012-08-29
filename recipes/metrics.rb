@@ -1,4 +1,4 @@
-bootstrap_system_user "metrics"
+# bootstrap_system_user "metrics"
 
 template "/etc/default/metrics" do
   owner "root"
@@ -7,12 +7,12 @@ template "/etc/default/metrics" do
   backup false
 end
 
-bootstrap_profile "metric"  do
-  username node.graphite.metrics.user
-  params [
-    "[ -f /etc/default/metrics ] && . /etc/default/metrics"
-  ]
-end
+# bootstrap_profile "metric"  do
+  # username node.graphite.metrics.user
+  # params [
+    # "[ -f /etc/default/metrics ] && . /etc/default/metrics"
+  # ]
+# end
 
 cookbook_file "/usr/local/bin/record_metric" do
   owner node.graphite.metrics.user

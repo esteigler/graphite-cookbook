@@ -2,6 +2,8 @@
 #
 default[:graphite][:home]    = "/opt/graphite"
 default[:graphite][:version] = "0.9.10"
+default[:graphite][:user] = "graphite"
+default[:graphite][:group] = "graphite"
 
 
 
@@ -124,7 +126,7 @@ default[:graphite][:web][:timezone]     = "Europe/London"
 # You should not use the loopback address 127.0.0.1 here because every webapp in
 # the cluster should use the exact same value and should list every member in the
 # cluster.
-default[:graphite][:web][:memcache_hosts]     = []
+default[:graphite][:web][:memcache_hosts]     = ["127.0.0.1:11211"]
 
 
 ### METRICS - USER WHICH COLLECTS METRICS

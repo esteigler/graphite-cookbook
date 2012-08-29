@@ -1,0 +1,14 @@
+[uwsgi]
+pidfile = <%= @pid %>
+master = true
+no-orphans = true
+socket = <%= @socket %>
+logto = <%= @logfile %>
+workers = <%= @workers %>
+<%# limit-as = %>
+<%# harakiri = %>
+uid = <%= @uid %>
+gid = <%= @gid %>
+chdir = <%= @working_directory %>
+module = <%= @handler %>
+die-on-term = true

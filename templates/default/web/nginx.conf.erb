@@ -1,0 +1,31 @@
+server {
+  listen   4005;
+  server_name  graphite-web;
+
+  error_log   /var/log/nginx/graphite-web-errors.log;
+  access_log  /var/log/nginx/graphite-web.log;
+
+  location / {
+    # Pass requests to uwsgi
+    uwsgi_pass unix:<%= node.python.uwsgi.socket %>;
+    include uwsgi_params;
+    proxy_redirect off;
+
+    proxy_set_header  X-Real-IP  $remote_addr;
+    proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header  Host $http_host;
+
+    # For CORS Ajax
+    #proxy_pass_header Access-Control-Allow-Origin;
+    #proxy_pass_header Access-Control-Allow-Methods;
+    #proxy_hide_header Access-Control-Allow-Headers;
+    #add_header Access-Control-Allow-Headers 'X-Requested-With, Content-Type';
+    #add_header Access-Control-Allow-Credentials true;
+
+    # Authorize access
+    #auth_basic           "ElasticSearch";
+    #auth_basic_user_file /passwords;
+
+  }
+
+}
