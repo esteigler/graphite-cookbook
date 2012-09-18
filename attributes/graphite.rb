@@ -166,7 +166,7 @@ default[:graphite][:metrics][:collectors] = []
 # It should not contain . since carbon will create a directory for each
 # component. your.awesome.hostname will result in
 # <graphite-storage>your/awesome/hostname/metric.wsp
-default[:graphite][:metrics][:hostname] = "your-hostname"
+default[:graphite][:metrics][:hostname] = "statsd"
 #
 # Metrics collector/aggregator IPs
 default[:graphite][:metrics][:ips] = []
