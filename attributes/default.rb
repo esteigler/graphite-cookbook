@@ -182,6 +182,6 @@ default[:graphite][:web][:socket] = "/tmp/graphite.sock"
 default[:graphite][:web][:pidfile] = "/var/run/uwsgi.pid"
 default[:graphite][:web][:socket] = "/tmp/uwsgi.sock"
 default[:graphite][:web][:logfile] = "/var/log/uwsgi.log"
-default[:graphite][:web][:workers] = 2
+default[:graphite][:web][:workers] = 8
 default[:graphite][:web][:uid] = "www-data"
 default[:graphite][:web][:gid] = "www-data"
