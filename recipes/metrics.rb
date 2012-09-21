@@ -68,7 +68,6 @@ node.graphite.metrics.collectors.each do |collector|
     end
 
     template "/etc/init/metric-#{collector[:name]}.conf" do
-      cookbook "graphite"
       source "metrics/metric.upstart.erb"
       variables(
         :name   => collector[:name],

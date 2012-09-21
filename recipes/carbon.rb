@@ -1,20 +1,17 @@
 package "libsqlite3-dev"
 
-python_pip "pysqlite" do
-  version "2.6.3"
-end
+packages = {
+  'pysqlite' => '2.6.3',
+  'Twisted' => '11.1.0',
+  'txAMQP' => '0.5',
+  'carbon' => node.graphite.version,
+}
 
-python_pip "Twisted" do
-  version "11.1.0"
-end
-
-python_pip "txAMQP" do
-  version "0.5"
-end
-
-python_pip "carbon" do
-  version node.graphite.version
-  directory "#{node.graphite.home}/lib"
+packages.each do |package, version|
+  python_pip package do
+    version version
+    action :install
+  end
 end
 
 service "carbon-cache" do
@@ -23,23 +20,32 @@ service "carbon-cache" do
 end
 
 template "#{node.graphite.home}/conf/carbon.conf" do
-  cookbook "graphite"
+  source "carbon.conf.erb"
+  owner "graphite"
+  mode "0644"
   notifies :restart, resources(:service => "carbon-cache"), :delayed
   backup false
 end
 
 template "#{node.graphite.home}/conf/storage-schemas.conf" do
-  cookbook "graphite"
+  source "storage-schemas.conf.erb"
+  owner "graphite"
+  mode "0644"
   notifies :restart, resources(:service => "carbon-cache"), :delayed
   backup false
 end
 
 template "/etc/init/carbon-cache.conf" do
-  cookbook "graphite"
   source "carbon-cache.upstart.erb"
   mode "0644"
   notifies :restart, resources(:service => "carbon-cache"), :delayed
   backup false
+end
+
+bash "update_perms" do
+  user "root"
+  cwd "#{node.graphite.home}/storage"
+  code "chown -R graphite ."
 end
 
 service "carbon-cache" do

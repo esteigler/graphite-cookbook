@@ -1,13 +1,14 @@
 server {
-  listen   4005;
-  server_name  graphite-web;
+  listen   80;
+  #server_name  graphite.wineapi.com;
+  server_name  _;
 
   error_log   /var/log/nginx/graphite-web-errors.log;
   access_log  /var/log/nginx/graphite-web.log;
 
   location / {
     # Pass requests to uwsgi
-    uwsgi_pass unix:<%= node.python.uwsgi.socket %>;
+    uwsgi_pass unix:<%= node.graphite.web.socket %>;
     include uwsgi_params;
     proxy_redirect off;
 

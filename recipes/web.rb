@@ -1,25 +1,21 @@
-python_pip "Django" do
-  version "1.3.1"
+packages = {
+  'Django' => '1.3.1',
+  'python-memcached' => '1.47',
+  'graphite_web' => node.graphite.version,
+  'django-tagging' => '0.3.1',
+  'simplejson' => '2.2.1',
+}
+
+packages.each do |package, version|
+  python_pip package do
+    version version
+    action :install
+  end
 end
 
-python_pip "python-memcached" do
-  version "1.47"
+package "python-cairo" do
+  action :install
 end
-
-python_pip "graphite_web" do
-  version node[:graphite][:version]
-  directory "#{node[:graphite][:home]}/webapp"
-end
-
-python_pip "django-tagging" do
-  version "0.3.1"
-end
-
-python_pip "simplejson" do
-  version "2.2.1"
-end
-
-package "python-cairo"
 
 # execute "correct permissions for graphite web" do
 #   command "chown -fR graphite.uwsgi #{node.graphite.home}/webapp"

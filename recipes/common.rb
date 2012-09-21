@@ -5,4 +5,6 @@ user "graphite" do
   shell '/bin/sh'
 end
 
-python_pip "yolk"
+python_pip "yolk" do
+  action :install
+end

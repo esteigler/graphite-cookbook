@@ -5,8 +5,6 @@ default[:graphite][:version] = "0.9.10"
 default[:graphite][:user] = "graphite"
 default[:graphite][:group] = "graphite"
 
-
-
 ### CARBON - THE DATA AGGREGATOR
 #
 # By default, everything will be installed in /opt/graphite.
@@ -115,7 +113,7 @@ default[:graphite][:whisper][:dir]      = "whisper-#{graphite[:version]}"
 default[:graphite][:web][:dir]          = "graphite-web-#{graphite[:version]}"
 #
 # Set your local timezone (django will *try* to figure this out automatically)
-default[:graphite][:web][:timezone]     = "Europe/London"
+default[:graphite][:web][:timezone]     = "America/New_York"
 #
 # This lists all the memcached servers that will be used by this webapp.
 # If you have a cluster of webapps you want to make sure all of them
@@ -126,7 +124,8 @@ default[:graphite][:web][:timezone]     = "Europe/London"
 # You should not use the loopback address 127.0.0.1 here because every webapp in
 # the cluster should use the exact same value and should list every member in the
 # cluster.
-default[:graphite][:web][:memcache_hosts]     = ["127.0.0.1:11211"]
+#default[:graphite][:web][:memcache_hosts]     = ["127.0.0.1:11211"]
+default[:graphite][:web][:memcache_hosts]     = [""]
 
 
 ### METRICS - USER WHICH COLLECTS METRICS
@@ -166,7 +165,7 @@ default[:graphite][:metrics][:collectors] = []
 # It should not contain . since carbon will create a directory for each
 # component. your.awesome.hostname will result in
 # <graphite-storage>your/awesome/hostname/metric.wsp
-default[:graphite][:metrics][:hostname] = "statsd"
+default[:graphite][:metrics][:hostname] = "graphite"
 #
 # Metrics collector/aggregator IPs
 default[:graphite][:metrics][:ips] = []
@@ -177,3 +176,12 @@ default[:graphite][:metrics][:port] = "2003"
 #
 # If you've installed statsite and don't want it anymore, remove it
 default[:graphite][:statsite][:disable] = false
+
+# WEB INTERFACE
+default[:graphite][:web][:socket] = "/tmp/graphite.sock"
+default[:graphite][:web][:pidfile] = "/var/run/uwsgi.pid"
+default[:graphite][:web][:socket] = "/tmp/uwsgi.sock"
+default[:graphite][:web][:logfile] = "/var/log/uwsgi.log"
+default[:graphite][:web][:workers] = 2
+default[:graphite][:web][:uid] = "www-data"
+default[:graphite][:web][:gid] = "www-data"

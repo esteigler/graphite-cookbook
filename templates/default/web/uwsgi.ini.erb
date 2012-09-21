@@ -1,14 +1,23 @@
 [uwsgi]
-pidfile = <%= @pid %>
+vacuum = true
 master = true
+processes = <%= node.graphite.web.workers %>
+pidfile = <%= node.graphite.web.pidfile %>
+socket = <%= node.graphite.web.socket %>
+chmod-socket = 666
+uid = <%= node.graphite.web.uid %>
+gid = <%= node.graphite.web.gid %>
+pythonpath = <%= node.graphite.home %>/webapp
+chdir = <%= node.graphite.home %>/webapp
+module=graphite.wsgi:application
+pymodule-alias = graphite.local_settings=<%= node.graphite.home %>/webapp/graphite/local_settings.py
+module = wsgi
+buffer-size = 65536
+logto = <%= node.graphite.web.logfile %>
+carbon = 127.0.0.1:2003
+
+# 20MB log file
+log_maxsize = 20971520
+
 no-orphans = true
-socket = <%= @socket %>
-logto = <%= @logfile %>
-workers = <%= @workers %>
-<%# limit-as = %>
-<%# harakiri = %>
-uid = <%= @uid %>
-gid = <%= @gid %>
-chdir = <%= @working_directory %>
-module = <%= @handler %>
 die-on-term = true
