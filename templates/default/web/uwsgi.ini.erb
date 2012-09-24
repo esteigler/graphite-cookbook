@@ -5,8 +5,8 @@ processes = <%= node.graphite.web.workers %>
 pidfile = <%= node.graphite.web.pidfile %>
 socket = <%= node.graphite.web.socket %>
 chmod-socket = 666
-uid = <%= node.graphite.web.uid %>
-gid = <%= node.graphite.web.gid %>
+uid = <%= node.graphite.user %>
+gid = <%= node.graphite.group %>
 pythonpath = <%= node.graphite.home %>/webapp
 chdir = <%= node.graphite.home %>/webapp
 module=graphite.wsgi:application

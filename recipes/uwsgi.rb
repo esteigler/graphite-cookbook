@@ -7,6 +7,11 @@ directory "/etc/nginx" do
   action :create
 end
 
+directory "/etc/uwsgi" do
+  action :create
+  mode "0755"
+end
+
 # template the ini file for uwsgi
 template "/etc/uwsgi/graphite.ini" do
   source "web/uwsgi.ini.erb"
