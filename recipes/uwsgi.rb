@@ -51,7 +51,9 @@ template "#{node[:graphite][:home]}/webapp/graphite/local_settings.py" do
 end
 
 service "uwsgi" do
-  action :start
+  provider Chef::Provider::Service::Upstart
+  supports :status => true, :restart => true, :reload => true
+  action [ :enable, :start ]
 end
 
 template "/etc/nginx/sites-available/graphite.conf" do
