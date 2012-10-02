@@ -4,7 +4,7 @@ packages = {
   'pysqlite' => '2.6.3',
   'Twisted' => '11.1.0',
   'txAMQP' => '0.5',
-  'carbon' => node.graphite.version,
+  'carbon' => node['graphite']['version'],
 }
 
 packages.each do |package, version|
@@ -19,7 +19,7 @@ service "carbon-cache" do
   provider Chef::Provider::Service::Upstart
 end
 
-template "#{node.graphite.home}/conf/carbon.conf" do
+template "#{node['graphite']['home']}/conf/carbon.conf" do
   source "carbon.conf.erb"
   owner "graphite"
   mode "0644"
@@ -27,7 +27,7 @@ template "#{node.graphite.home}/conf/carbon.conf" do
   backup false
 end
 
-template "#{node.graphite.home}/conf/storage-schemas.conf" do
+template "#{node['graphite']['home']}/conf/storage-schemas.conf" do
   source "storage-schemas.conf.erb"
   owner "graphite"
   mode "0644"
@@ -44,7 +44,7 @@ end
 
 bash "update_perms" do
   user "root"
-  cwd "#{node.graphite.home}/storage"
+  cwd "#{node['graphite']['home']}/storage"
   code "chown -R graphite ."
 end
 

@@ -27,25 +27,25 @@ template "/etc/init/uwsgi.conf" do
 end
 
 # install the django wsgi handler init script
-template "#{node[:graphite][:home]}/webapp/wsgi.py" do
+template "#{node['graphite']['home']}/webapp/wsgi.py" do
   source "web/wsgi.py.erb"
-  owner node.graphite.user
-  group node.graphite.group
+  owner node['graphite']['user']
+  group node['graphite']['group']
   mode "0644"
 end
 
-template "#{node[:graphite][:home]}/conf/dashboard.conf" do
+template "#{node['graphite']['home']}/conf/dashboard.conf" do
   source "dashboard.conf.erb"
-  owner node.graphite.user
-  group node.graphite.group
+  owner node['graphite']['user']
+  group node['graphite']['group']
   mode "0644"
   backup false
 end
 
-template "#{node[:graphite][:home]}/webapp/graphite/local_settings.py" do
+template "#{node['graphite']['home']}/webapp/graphite/local_settings.py" do
   source "local_settings.py.erb"
-  owner node.graphite.user
-  group node.graphite.group
+  owner node['graphite']['user']
+  group node['graphite']['group']
   mode "0644"
   backup false
 end

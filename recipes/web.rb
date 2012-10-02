@@ -1,7 +1,7 @@
 packages = {
   'Django' => '1.3.1',
   'python-memcached' => '1.47',
-  'graphite_web' => node.graphite.version,
+  'graphite_web' => node['graphite']['version'],
   'django-tagging' => '0.3.1',
   'simplejson' => '2.2.1',
 }
@@ -23,12 +23,12 @@ end
 #   command "chmod -fR 755 #{node.graphite.home}/storage/log/webapp"
 # end
 
-file "#{node[:graphite][:home]}/webapp/favicon.ico" do
+file "#{node['graphite']['home']}/webapp/favicon.ico" do
   owner "graphite"
   group "graphite"
 end
 
 execute "syncdb" do
-  command "yes no | python #{node[:graphite][:home]}/webapp/graphite/manage.py syncdb"
-  not_if "[ -f #{node[:graphite][:home]}/storage/graphite.db ]"
+  command "yes no | python #{node['graphite']['home']}/webapp/graphite/manage.py syncdb"
+  not_if "[ -f #{node['graphite']['home']}/storage/graphite.db ]"
 end

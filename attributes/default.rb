@@ -1,9 +1,9 @@
 ### GENERAL
 #
-default[:graphite][:home]    = "/opt/graphite"
-default[:graphite][:version] = "0.9.10"
-default[:graphite][:user] = "graphite"
-default[:graphite][:group] = "graphite"
+default['graphite']['home']    = "/opt/graphite"
+default['graphite']['version'] = "0.9.10"
+default['graphite']['user'] = "graphite"
+default['graphite']['group'] = "graphite"
 
 ### CARBON - THE DATA AGGREGATOR
 #
@@ -11,19 +11,19 @@ default[:graphite][:group] = "graphite"
 # It is strongly recommended that you do not change the default install path.
 # Strange problems can ensue if you do.
 #
-default[:graphite][:carbon][:dir]       = "carbon-#{graphite[:version]}"
+default['graphite']['carbon']['dir']       = "carbon-#{graphite['version']}"
 #
 # Limit the size of the cache to avoid swapping or becoming CPU bound.
 # Sorts and serving cache queries gets more expensive as the cache grows.
 # Use the value "inf" (infinity) for an unlimited cache size.
-default[:graphite][:carbon][:max_cache_size] = "inf"
+default['graphite']['carbon']['max_cache_size'] = "inf"
 #
 # Limits the number of whisper update_many() calls per second, which effectively
 # means the number of write requests sent to the disk. This is intended to
 # prevent over-utilizing the disk and thus starving the rest of the system.
 # When the rate of required updates exceeds this, then carbon's caching will
 # take effect and increase the overall throughput accordingly.
-default[:graphite][:carbon][:max_updates_per_second] = 1000
+default['graphite']['carbon']['max_updates_per_second'] = 1000
 #
 # Softly limits the number of whisper files that get created each minute.
 # Setting this value low (like at 50) is a good way to ensure your graphite
@@ -32,37 +32,37 @@ default[:graphite][:carbon][:max_updates_per_second] = 1000
 # database files to all get created and thus longer until the data becomes usable.
 # Setting this value high (like "inf" for infinity) will cause graphite to create
 # the files quickly but at the risk of slowing I/O down considerably for a while.
-default[:graphite][:carbon][:max_creates_per_minute] = 50
+default['graphite']['carbon']['max_creates_per_minute'] = 50
 #
 # TCP listening interface
-default[:graphite][:carbon][:line_receiver_interface] = "0.0.0.0"
-default[:graphite][:carbon][:line_receiver_port]      = "2003"
+default['graphite']['carbon']['line_receiver_interface'] = "0.0.0.0"
+default['graphite']['carbon']['line_receiver_port']      = "2003"
 #
 # Set this to True to enable the UDP listener. By default this is off
 # because it is very common to run multiple carbon daemons and managing
 # another (rarely used) port for every carbon instance is not fun.
-default[:graphite][:carbon][:enable_udp_listener]    = "False"
-default[:graphite][:carbon][:udp_receiver_interface] = "0.0.0.0"
-default[:graphite][:carbon][:udp_receiver_port]      = "2003"
+default['graphite']['carbon']['enable_udp_listener']    = "False"
+default['graphite']['carbon']['udp_receiver_interface'] = "0.0.0.0"
+default['graphite']['carbon']['udp_receiver_port']      = "2003"
 
-default[:graphite][:carbon][:pickle_receiver_interface] = "0.0.0.0"
-default[:graphite][:carbon][:pickle_receiver_port]      = "2004"
+default['graphite']['carbon']['pickle_receiver_interface'] = "0.0.0.0"
+default['graphite']['carbon']['pickle_receiver_port']      = "2004"
 #
 # Per security concerns outlined in Bug #817247 the pickle receiver
 # will use a more secure and slightly less efficient unpickler.
 # Set this to True to revert to the old-fashioned insecure unpickler.
-default[:graphite][:carbon][:use_insecure_unpickler]      = "False"
+default['graphite']['carbon']['use_insecure_unpickler']      = "False"
 #
 # AMQP
-default[:graphite][:carbon][:amqp][:enable]              = "False"
-default[:graphite][:carbon][:amqp][:verbose]             = "False"
-default[:graphite][:carbon][:amqp][:host]                = "localhost"
-default[:graphite][:carbon][:amqp][:port]                = 5672
-default[:graphite][:carbon][:amqp][:vhost]               = "/"
-default[:graphite][:carbon][:amqp][:user]                = "guest"
-default[:graphite][:carbon][:amqp][:password]            = "guest"
-default[:graphite][:carbon][:amqp][:exchange]            = "graphite"
-default[:graphite][:carbon][:amqp][:metric_name_in_body] = "False"
+default['graphite']['carbon']['amqp']['enable']              = "False"
+default['graphite']['carbon']['amqp']['verbose']             = "False"
+default['graphite']['carbon']['amqp']['host']                = "localhost"
+default['graphite']['carbon']['amqp']['port']                = 5672
+default['graphite']['carbon']['amqp']['vhost']               = "/"
+default['graphite']['carbon']['amqp']['user']                = "guest"
+default['graphite']['carbon']['amqp']['password']            = "guest"
+default['graphite']['carbon']['amqp']['exchange']            = "graphite"
+default['graphite']['carbon']['amqp']['metric_name_in_body'] = "False"
 #
 # The default values in the examples are sane, but it is strongly recommended
 # to consider how much data you would like to retain. By default, it will be
@@ -96,7 +96,7 @@ default[:graphite][:carbon][:amqp][:metric_name_in_body] = "False"
 #     retentions = 1m:31d, 10m:1y
 #
 # Schema definitions for whisper files:
-default[:graphite][:whisper][:schemas] = []
+default['graphite']['whisper']['schemas'] = []
 
 
 ### WHISPER - DATABASE ENGINE
@@ -105,15 +105,15 @@ default[:graphite][:whisper][:schemas] = []
 # you will be using.  If you are using the default python that came with your
 # distribution, or have no idea what this means, it is most likely the root /
 # superuser account.
-default[:graphite][:whisper][:dir]      = "whisper-#{graphite[:version]}"
+default['graphite']['whisper']['dir']      = "whisper-#{graphite['version']}"
 
 ### WEB - Django WEB APP
 #
 # This is the frontend / webapp that renders the images.
-default[:graphite][:web][:dir]          = "graphite-web-#{graphite[:version]}"
+default['graphite']['web']['dir']          = "graphite-web-#{graphite['version']}"
 #
 # Set your local timezone (django will *try* to figure this out automatically)
-default[:graphite][:web][:timezone]     = "America/New_York"
+default['graphite']['web']['timezone']     = "America/New_York"
 #
 # This lists all the memcached servers that will be used by this webapp.
 # If you have a cluster of webapps you want to make sure all of them
@@ -124,7 +124,7 @@ default[:graphite][:web][:timezone]     = "America/New_York"
 # You should not use the loopback address 127.0.0.1 here because every webapp in
 # the cluster should use the exact same value and should list every member in the
 # cluster.
-default[:graphite][:web][:memcache_hosts]     = ["127.0.0.1:11211"]
+default['graphite']['web']['memcache_hosts']     = ["127.0.0.1:11211"]
 
 
 ### METRICS - USER WHICH COLLECTS METRICS
@@ -138,7 +138,7 @@ default[:graphite][:web][:memcache_hosts]     = ["127.0.0.1:11211"]
 # collector.
 #
 # You shouldn't need to change this
-default[:graphite][:metrics][:user] = "metrics"
+default['graphite']['metrics']['user'] = "metrics"
 #
 # Define your metrics. Here's an example:
 
@@ -158,27 +158,27 @@ default[:graphite][:metrics][:user] = "metrics"
 #           ]
 #         }
 #     }
-default[:graphite][:metrics][:collectors] = []
+default['graphite']['metrics']['collectors'] = []
 #
 # The hostname where these metrics are being sent from.
 # It should not contain . since carbon will create a directory for each
 # component. your.awesome.hostname will result in
 # <graphite-storage>your/awesome/hostname/metric.wsp
-default[:graphite][:metrics][:hostname] = "graphite"
+default['graphite']['metrics']['hostname'] = "graphite"
 #
 # Metrics collector/aggregator IPs
-default[:graphite][:metrics][:ips] = []
+default['graphite']['metrics']['ips'] = []
 #
 # Metrics collector/aggregator port
 # If you're using statsd or statsite, this will be different
-default[:graphite][:metrics][:port] = "2003"
+default['graphite']['metrics']['port'] = "2003"
 #
 # If you've installed statsite and don't want it anymore, remove it
-default[:graphite][:statsite][:disable] = false
+default['graphite']['statsite']['disable'] = false
 
 # WEB INTERFACE
-default[:graphite][:web][:socket] = "/tmp/graphite.sock"
-default[:graphite][:web][:pidfile] = "/var/run/uwsgi.pid"
-default[:graphite][:web][:socket] = "/tmp/uwsgi.sock"
-default[:graphite][:web][:logfile] = "/var/log/uwsgi.log"
-default[:graphite][:web][:workers] = 8
+default['graphite']['web']['socket'] = "/tmp/graphite.sock"
+default['graphite']['web']['pidfile'] = "/var/run/uwsgi.pid"
+default['graphite']['web']['socket'] = "/tmp/uwsgi.sock"
+default['graphite']['web']['logfile'] = "/var/log/uwsgi.log"
+default['graphite']['web']['workers'] = 8

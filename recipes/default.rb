@@ -7,6 +7,6 @@ include_recipe "graphite::statsd"
 
 execute "correct permissions for graphite folder" do
   command %{
-    chown -fR graphite. #{node.graphite.home}
+    chown -fR graphite. #{node['graphite']['home']}
   }
 end
