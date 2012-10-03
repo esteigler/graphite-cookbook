@@ -1,3 +1,5 @@
+Build Status: [![Build Status](https://secure.travis-ci.org/esteigler/graphite-cookbook.png)](http://travis-ci.org/esteigler/graphite-cookbook)
+
 # ABOUT
 
 * Store numeric time-series data
