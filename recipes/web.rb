@@ -1,7 +1,6 @@
 packages = {
   'Django' => '1.3.1',
   'python-memcached' => '1.47',
-  'graphite_web' => node['graphite']['version'],
   'django-tagging' => '0.3.1',
   'simplejson' => '2.2.1',
 }
@@ -11,6 +10,12 @@ packages.each do |package, version|
     version version
     action :install
   end
+end
+
+python_pip "graphite_web" do
+  version node['graphite']['version']
+  action :install
+  not_if {File.exists?("#{node['graphite']['home']}/webapp/graphite/__init__.py")}
 end
 
 package "python-cairo" do

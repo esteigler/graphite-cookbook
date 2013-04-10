@@ -4,7 +4,6 @@ packages = {
   'pysqlite' => '2.6.3',
   'Twisted' => '11.1.0',
   'txAMQP' => '0.5',
-  'carbon' => node['graphite']['version'],
 }
 
 packages.each do |package, version|
@@ -12,6 +11,12 @@ packages.each do |package, version|
     version version
     action :install
   end
+end
+
+python_pip "carbon" do
+  version node['graphite']['version']
+  action :install
+  not_if {File.exists?("#{node['graphite']['home']}/conf/carbon.conf")}
 end
 
 service "carbon-cache" do
